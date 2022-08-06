@@ -9,9 +9,12 @@ module.exports = (() => {
     const config = {
         info: {
             name: "TwitchInVC",
-            author: {
-                name: "SmolAlli",
-            },
+            authors: [
+                {
+                    name: "SmolAlli",
+                    github_username: "SmolAlli",
+                },
+            ],
             version: "0.0.1",
             description:
                 "Changes the name colours of people in VC if they are live on Twitch",
@@ -28,7 +31,7 @@ module.exports = (() => {
                   return config.info.name;
               }
               getAuthor() {
-                  return config.info.authors.map((a) => a.name).join(", ");
+                  return config.info.authors;
               }
               getDescription() {
                   return config.info.description;
@@ -125,9 +128,6 @@ module.exports = (() => {
                               VoiceUser.prototype,
                               "renderName",
                               (thisObject, _, returnValue) => {
-                                  console.log(thisObject);
-                                  //   console.log(_);
-                                  //   console.log(returnValue);
                                   if (!returnValue || !returnValue.props)
                                       return;
 
@@ -146,8 +146,11 @@ module.exports = (() => {
                                           isOnTwitch = true;
                                       }
                                   });
-
+                                  
+                                  // If you want to test that the plugin is working, 
+                                  // disable this line below and check if all people in VC are now purple
                                   if (!isOnTwitch) return;
+                                  
                                   returnValue.props.style = {
                                       color: TwitchColour,
                                       backfaceVisibility: "hidden",
